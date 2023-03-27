@@ -1,5 +1,19 @@
 <div>
-  <input #usernameRef type="text">
-  <input #passwordRef type="password">
-  <button (click)="onClick(usernameRef.value, passwordRef.value)">Login</button>
+  <form #formRef="ngForm" (ngSubmit)="onSubmit(formRef.value)">
+    <fieldset ngModelGroup="login">
+      <!-- username -->
+      <input name="username" placeholder="please enter username" required type="text" [(ngModel)]="username"
+        #usernameRef="ngModel" minlength="3" /> {{
+      usernameRef.errors |
+      json }}
+      <div *ngIf="usernameRef.errors?.['required']">this is required.</div>
+      <div *ngIf="usernameRef.errors?.['minlength']">should be at least 3 char.</div>
+      <!-- password -->
+      <input name="password" placeholder="please enter password" required type="password" [(ngModel)]="password"
+        #passwordRef="ngModel" /> {{
+      passwordRef.errors | json }}
+      <div *ngIf="passwordRef.errors?.['required']">this is required.</div>
+      <button type="submit">Login</button>
+    </fieldset>
+  </form>
 </div>
